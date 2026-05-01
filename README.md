@@ -1,2 +1,16 @@
-# Digital-Foot-Print-Scanner
-A Python-based cybersecurity simulation tool that checks whether an email exists in a generated dataset of 20000 synthetic records and displays breach history with risk levels (Low/Medium/High).
+# 🕵️ Digital Footprint Scanner
+
+## 📌 Overview
+A simple Python project that simulates a cybersecurity system by checking if an email exists in a generated data breach dataset.
+
+## ⚙️ Features
+- Generates 20000 random email records
+- Simulates breach history
+- Email lookup system
+- Risk level classification (Low / Medium / High)
+- Handles "No Data Found" cases
+
+## 🛠️ Tech Used
+- Python
+- Random module
+- defaultdict
