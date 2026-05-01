@@ -1,0 +1,84 @@
+import random
+from collections import defaultdict
+
+# -------------------------------
+# STEP 1: GENERATE RANDOM DATASET (2000 emails)
+# -------------------------------
+
+domains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"]
+breaches_list = ["Facebook", "LinkedIn", "Twitter", "Adobe", "Dropbox", "Yahoo", "Canva"]
+years = [2012, 2015, 2017, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+
+def generate_email():
+    name = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=6))
+    number = random.randint(1, 999)
+    domain = random.choice(domains)
+    return f"{name}{number}@{domain}"
+
+# dataset dictionary
+data = defaultdict(list)
+
+# create 2000 unique emails
+emails = set()
+while len(emails) < 20000:
+    emails.add(generate_email())
+
+# fill dataset
+for email in emails:
+    # each email can have 0–3 breach records
+    for _ in range(random.randint(0, 3)):
+        data[email].append(
+            (random.choice(breaches_list), random.choice(years))
+        )
+#Print Data For Testing
+print("\n🔹 Sample dataset entries:\n")
+
+count = 0
+for email, breaches in data.items():
+    print("Email:", email)
+    print("Breaches:", breaches)
+    print("-" * 40)
+    
+    count += 1
+    if count == 5:
+        break
+
+# -------------------------------
+# STEP 2: RISK FUNCTION
+# -------------------------------
+
+def risk_level(count):
+    if count == 0:
+        return "LOW"
+    elif count <= 2:
+        return "MEDIUM"
+    else:
+        return "HIGH"
+
+# -------------------------------
+# STEP 3: SCANNER
+# -------------------------------
+
+email = input("Enter email: ").strip().lower()
+
+if email in data and len(data[email]) > 0:
+
+    breaches = data[email]
+
+    print("\n🔍 RESULT FOUND\n")
+
+    print(f"⚠️ Found in {len(breaches)} breach(es):")
+
+    for breach, year in breaches:
+        print(f"- {breach} ({year})")
+
+    print("\nRisk Level:", risk_level(len(breaches)))
+
+    print("\nRecommendations:")
+    print("- Change password immediately")
+    print("- Enable 2FA")
+    print("- Avoid password reuse")
+
+else:
+    print("\n❌ NO DATA FOUND IN DATASET")
+    print("Risk Level: LOW")
